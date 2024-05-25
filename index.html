@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by 박재훈</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Number Generator</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  #container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #square {
+    width: 200px;
+    height: 200px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  #board {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button {
+    margin: 5px;
+  }
+ 
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="square"></div>
+  <button onclick="generateNumber()">뽑기</button>
+  <button onclick="resetNumber()">리셋</button>
+  <div id="board">게임보드</div>
+    <!-- 버튼 20개 추가 -->
+  <div class="button-container">
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+  </div>
+  <div class="button-container">
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+    <button class="button" onclick="setNumber(this)"></button>
+  </div>
+  <div>숫자선택</div>
+  <div id="number-buttons" class="button-container">
+    <!-- 0부터 30까지의 숫자 버튼 생성 -->
+    <button class="button" onclick="selectNumber(0)">0</button>
+    <button class="button" onclick="selectNumber(1)">1</button>
+    <button class="button" onclick="selectNumber(2)">2</button>
+    <button class="button" onclick="selectNumber(3)">3</button>
+    <button class="button" onclick="selectNumber(4)">4</button>
+    <button class="button" onclick="selectNumber(5)">5</button>
+    <button class="button" onclick="selectNumber(6)">6</button>
+    <button class="button" onclick="selectNumber(7)">7</button>
+    <button class="button" onclick="selectNumber(8)">8</button>
+    <button class="button" onclick="selectNumber(9)">9</button>
+    <button class="button" onclick="selectNumber(10)">10</button>
+    <button class="button" onclick="selectNumber(11)">11</button>
+    <button class="button" onclick="selectNumber(12)">12</button>
+    <button class="button" onclick="selectNumber(13)">13</button>
+    <button class="button" onclick="selectNumber(14)">14</button>
+    <button class="button" onclick="selectNumber(15)">15</button>
+    <button class="button" onclick="selectNumber(16)">16</button>
+    <button class="button" onclick="selectNumber(17)">17</button>
+    <button class="button" onclick="selectNumber(18)">18</button>
+    <button class="button" onclick="selectNumber(19)">19</button>
+    <button class="button" onclick="selectNumber(20)">20</button>
+    <button class="button" onclick="selectNumber(21)">21</button>
+    <button class="button" onclick="selectNumber(22)">22</button>
+    <button class="button" onclick="selectNumber(23)">23</button>
+    <button class="button" onclick="selectNumber(24)">24</button>
+    <button class="button" onclick="selectNumber(25)">25</button>
+    <button class="button" onclick="selectNumber(26)">26</button>
+    <button class="button" onclick="selectNumber(27)">27</button>
+    <button class="button" onclick="selectNumber(28)">28</button>
+    <button class="button" onclick="selectNumber(29)">29</button>
+    <!-- 나머지 숫자 버튼 생성 -->
+    <button class="button" onclick="selectNumber(30)">30</button>
+  </div>
+</div>
+
+<script>
+var clickCount = 0; // 클릭 카운트 변수 초기화
+var selectedNumber = null; // 선택한 숫자 변수 초기화
+var selectedNumbers = []; // 선택한 숫자 배열 초기화
+
+function generateNumber() {
+  clickCount++; // 뽑기 버튼 클릭 시 카운트 증가
+  var randomNumber = Math.floor(Math.random() * 31); // 0부터 30 사이의 임의의 숫자 생성
+  var square = document.getElementById("square");
+  square.innerText = randomNumber; // 정사각형에 숫자 표시
+  // 사각형 크기에 맞게 숫자 크기 조절
+  var fontSize = Math.min(square.offsetWidth, square.offsetHeight) * 0.5; // 사각형 크기의 절반으로 폰트 크기 조절
+  square.style.fontSize = fontSize + "px";
+
+  if (clickCount >= 21) { // 21번째 뽑기 버튼 클릭 시 초기화
+    resetNumber();
+  }
+}
+
+function resetNumber() {
+  clickCount = 0; // 클릭 카운트 초기화
+  var square = document.getElementById("square");
+  square.innerText = ""; // 정사각형 안의 숫자 초기화
+  square.style.fontSize = "24px"; // 폰트 크기 초기화
+  
+  var buttons = document.querySelectorAll(".button");
+  buttons.forEach(function(button, index) {
+    if (!selectedNumbers.includes(index)) {
+      button.innerText = ""; // 게임 보드의 숫자 버튼 초기화
+    }
+  });
+
+  selectedNumber = null; // 선택한 숫자 초기화
+}
+
+function selectNumber(number) {
+  selectedNumber = number; // 선택한 숫자 저장
+}
+
+function setNumber(button) {
+  if (selectedNumber !== null) { // 숫자 선택한 경우에만 실행
+    button.innerText = selectedNumber; // 버튼에 선택한 숫자 표시
+    selectedNumbers.push(Array.from(document.querySelectorAll('.button')).indexOf(button)); // 선택한 숫자 배열에 추가
+    selectedNumber = null; // 선택한 숫자 초기화
+  }
+}
+</script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
